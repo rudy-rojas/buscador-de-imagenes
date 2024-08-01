@@ -1,6 +1,9 @@
 import { Field, Form, Formik } from 'formik';
 import styles from '@/styles/Header.module.css';
-const App = () => {
+
+
+const App = () => { 
+ 
   return (
     <>
       <div>
@@ -8,13 +11,26 @@ const App = () => {
           <Formik
             initialValues={{ search: '' }}
             onSubmit={async (values) => {
-              console.log(calues);
+              const response = await fetch(
+                `https://api.unsplash.com/search/photos?&query=${values.search}&per_page=5`,
+                {
+                  headers: {
+                    Authorization:
+                      'Client-ID 02VLPp8JYl4v74GP4Ko7xFsHr4pVJqXUwvRodU-Mhjo',
+                  },
+                }
+              );
+              const {results} = await response.json();
+              //  setPhotos(data.results)
+              console.log(results)
+              
             }}
           >
             <Form>
               <Field name="search"></Field>
             </Form>
           </Formik>
+          <h1>hi</h1>
         </header>
       </div>
     </>
